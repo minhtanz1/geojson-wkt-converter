@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>*** GEO CONVERTER 2000 *** - The Ultimate Coordinate Transformation Tool!</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body bgcolor="#008080" text="#FFFF00" link="#FF00FF" vlink="#00FFFF" alink="#FFFFFF">
+    
+    <!-- Header with animated text -->
+    <center>
+        <table border="3" cellpadding="10" cellspacing="5" bgcolor="#000080" width="100%">
+            <tr>
+                <td align="center">
+                    <font size="6" color="#FFFF00" face="Comic Sans MS, Arial">
+                        <blink>*** WELCOME TO GEO CONVERTER 2000 ***</blink>
+                    </font>
+                    <br>
+                    <font size="3" color="#00FFFF" face="Arial">
+                        <marquee>The most radical coordinate conversion tool on the World Wide Web!</marquee>
+                    </font>
+                </td>
+            </tr>
+        </table>
+    </center>
+
+    <br>
+
+    <!-- Main converter interface -->
+    <center>
+        <table border="2" cellpadding="15" cellspacing="0" bgcolor="#FFFFFF" width="95%">
+            <tr bgcolor="#FF6600">
+                <td colspan="2" align="center">
+                    <font size="4" color="#FFFFFF" face="Arial"><b>SUPER COORDINATE CONVERTER</b></font>
+                </td>
+            </tr>
+            <tr>
+                <td width="50%" bgcolor="#FFFFCC">
+                    <font color="#000000" face="Arial" size="3"><b>INPUT DATA:</b></font><br><br>
+                    
+                    <font color="#000080" size="2">Select Input Format:</font><br>
+                    <select id="inputFormat" onchange="updateInputPlaceholder()" style="background-color: #FFFF99; font-family: Arial;">
+                        <option value="wkt">WKT (Well-Known Text)</option>
+                        <option value="geojson">GeoJSON / Feature / FeatureCollection</option>
+                        <option value="latlon">Lat/Lon Coordinates</option>
+                    </select>
+                    <br><br>
+                    
+                    <textarea id="inputData" rows="10" cols="40" style="background-color: #FFFFCC; border: 2px solid #FF6600; font-family: Courier New; font-size: 12px;" placeholder="Enter your WKT data here..."></textarea>
+                    <br><br>
+                    
+                    <input type="button" value=">>> CONVERT NOW! <<<" onclick="convertData()" style="background-color: #FF6600; color: #FFFFFF; font-weight: bold; font-size: 14px; border: 3px outset #FF6600; cursor: pointer; font-family: Arial;">
+                </td>
+                
+                <td width="50%" bgcolor="#CCFFCC">
+                    <font color="#000000" face="Arial" size="3"><b>OUTPUT RESULTS:</b></font><br><br>
+                    
+                    <font color="#000080" size="2">Select Output Format:</font><br>
+                    <select id="outputFormat" style="background-color: #CCFFFF; font-family: Arial;">
+                        <option value="latlon">Lat/Lon Coordinates</option>
+                        <option value="wkt">WKT (Well-Known Text)</option>
+                        <option value="geojson">GeoJSON / Feature / FeatureCollection</option>
+                    </select>
+                    <br><br>
+                    
+                    <textarea id="outputData" rows="10" cols="40" style="background-color: #CCFFFF; border: 2px solid #009900; font-family: Courier New; font-size: 12px;" readonly placeholder="Converted data will appear here..."></textarea>
+                    <br><br>
+                    
+                    <input type="button" value="COPY RESULTS" onclick="copyResults()" style="background-color: #009900; color: #FFFFFF; font-weight: bold; font-size: 14px; border: 3px outset #009900; cursor: pointer; font-family: Arial;">
+                </td>
+            </tr>
+        </table>
+    </center>
+
+    <br>
+
+    <!-- Status messages -->
+    <center>
+        <table border="1" cellpadding="10" bgcolor="#FFFF99" width="80%">
+            <tr>
+                <td align="center">
+                    <font id="statusMessage" color="#FF0000" size="3" face="Arial"><b>Ready to convert! Enter your data above.</b></font>
+                </td>
+            </tr>
+        </table>
+    </center>
+
+    <br>
+
+    <!-- Examples section -->
+    <center>
+        <table border="2" cellpadding="10" bgcolor="#E0E0E0" width="90%">
+            <tr bgcolor="#800080">
+                <td align="center">
+                    <font color="#FFFFFF" size="4" face="Arial"><b>EXAMPLES & HELP</b></font>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <font color="#000080" face="Arial" size="2">
+                        <b>WKT Examples:</b><br>
+                        • POINT(-122.4194 37.7749)<br>
+                        • MULTIPOINT((-122.4194 37.7749), (-122.4094 37.7849))<br>
+                        • LINESTRING(-122.48369 37.8331, -122.48348 37.8338)<br>
+                        • MULTILINESTRING((-122.48369 37.8331, -122.48348 37.8338), (-122.47369 37.8431, -122.47348 37.8438))<br>
+                        • POLYGON((-122.4 37.8, -122.4 37.7, -122.3 37.7, -122.3 37.8, -122.4 37.8))<br>
+                        • MULTIPOLYGON(((-122.4 37.8, -122.4 37.7, -122.3 37.7, -122.3 37.8, -122.4 37.8)))<br><br>
+                        
+                        <b>GeoJSON Examples:</b><br>
+                        • Point: {"type":"Point","coordinates":[-122.4194,37.7749]}<br>
+                        • Feature: {"type":"Feature","geometry":{"type":"Point","coordinates":[-122.4194,37.7749]}}<br>
+                        • FeatureCollection: {"type":"FeatureCollection","features":[...]}<br>
+                        • MultiPoint: {"type":"MultiPoint","coordinates":[[-122.4194,37.7749],[-122.4094,37.7849]]}<br>
+                        • MultiPolygon: {"type":"MultiPolygon","coordinates":[[[[...]]]]} <br><br>
+                        
+                        <b>Lat/Lon Example:</b><br>
+                        37.7749, -122.4194<br>
+                        or<br>
+                        Latitude: 37.7749, Longitude: -122.4194<br>
+                        <font color="#800080" size="1">(You can also paste multiple Lat/Lon lines!)</font>
+                    </font>
+                </td>
+            </tr>
+        </table>
+    </center>
+
+    <br>
+
+    <!-- Footer -->
+    <center>
+        <table border="1" cellpadding="5" bgcolor="#000000" width="100%">
+            <tr>
+                <td align="center">
+                    <font color="#00FF00" size="2" face="Courier New">
+                        <blink>*** Powered by JavaScript Magic *** Best viewed in Netscape Navigator or Internet Explorer ***</blink>
+                    </font>
+                    <br>
+                    <font color="#FFFF00" size="1" face="Arial">
+                        Copyright © 2025 - Geo Converter 2000 - All Rights Reserved
+                    </font>
+                </td>
+            </tr>
+        </table>
+    </center>
+
+<script language="JavaScript">
+// Global variable to store parsed geometries in a structured way
+// Each element will be an object: { type: 'Point', coordinates: [lat, lon] }
+// or { type: 'LineString', coordinates: [[lat, lon], [lat, lon], ...] } etc.
+var parsedGeometries = [];
+
+function updateInputPlaceholder() {
+    var format = document.getElementById('inputFormat').value;
+    var textarea = document.getElementById('inputData');
+    
+    switch(format) {
+        case 'wkt':
+            textarea.placeholder = 'Enter WKT data like: POINT(-122.4194 37.7749) or POLYGON((...))';
+            break;
+        case 'geojson':
+            textarea.placeholder = 'Enter GeoJSON (Point, LineString, Polygon, Multi, Feature, FeatureCollection, GeometryCollection)';
+            break;
+        case 'latlon':
+            textarea.placeholder = 'Enter coordinates like: 37.7749, -122.4194 (one or multiple lines)';
+            break;
+    }
+}
+
+function updateStatus(message, isError) {
+    var statusEl = document.getElementById('statusMessage');
+    statusEl.innerHTML = '<b>' + message + '</b>';
+    // Using direct color attribute which is 90s HTML, not CSS
+    statusEl.color = isError ? '#FF0000' : '#009900'; 
+}
+
+// --- CORE PARSING FUNCTIONS ---
+
+// Parses a WKT string into an array of internal geometry objects
+function parseWKT(wktString) {
+    var geometries = [];
+    var cleanedWKT = wktString.trim().toUpperCase();
+
+    // Regex to extract geometry type and content
+    // This will match the first top-level geometry it finds.
+    var match = cleanedWKT.match(/^(\w+)\s*\((.*)\)$/);
+    if (!match) {
+        updateStatus('Invalid WKT format. Ensure it starts with a geometry type.', true);
+        return [];
+    }
+
+    var type = match[1];
+    var content = match[2];
+
+    try {
+        switch (type) {
+            case 'POINT':
+                // POINT(LON LAT) -> [LAT, LON]
+                var coords = content.match(/([+-]?\d*\.?\d+)\s+([+-]?\d*\.?\d+)/);
+                if (coords) {
+                    geometries.push({ type: 'Point', coordinates: [parseFloat(coords[2]), parseFloat(coords[1])] });
+                }
+                break;
+            case 'LINESTRING':
+            case 'MULTIPOINT': // MultiPoint WKT uses POINT(x y) or (x y, x y)
+                // LINESTRING(LON1 LAT1, LON2 LAT2, ...) -> [[LAT1, LON1], [LAT2, LON2], ...]
+                // MULTIPOINT((LON1 LAT1), (LON2 LAT2), ...) or (LON1 LAT1, LON2 LAT2, ...)
+                var rawPairs = content.match(/\((\s*[+-]?\d*\.?\d+\s+[+-]?\d*\.?\d+\s*)\)|\s*([+-]?\d*\.?\d+\s+[+-]?\d*\.?\d+)\s*/g);
+                var lineCoords = [];
+                if (rawPairs) {
+                    for (var i = 0; i < rawPairs.length; i++) {
+                        var pairMatch = rawPairs[i].match(/([+-]?\d*\.?\d+)\s+([+-]?\d*\.?\d+)/);
+                        if (pairMatch) {
+                            lineCoords.push([parseFloat(pairMatch[2]), parseFloat(pairMatch[1])]);
+                        }
+                    }
+                }
+                if (type === 'LINESTRING') {
+                    geometries.push({ type: 'LineString', coordinates: lineCoords });
+                } else { // MULTIPOINT
+                     geometries.push({ type: 'MultiPoint', coordinates: lineCoords });
+                }
+                break;
+            case 'POLYGON':
+                // POLYGON((LON1 LAT1, LON2 LAT2, ...)) -> [[[LAT1, LON1], [LAT2, LON2], ...]]
+                // For simplicity, only extracts the first (exterior) ring
+                var ringsMatch = content.match(/\(\s*\(([^)]*)\)\s*(?:,\s*\(([^)]*)\)\s*)?\)/); // Covers first ring (and possibly second for inner, but only first is used)
+                if (ringsMatch && ringsMatch[1]) {
+                    var ringPairs = ringsMatch[1].split(',').map(function(pair) {
+                        var c = pair.trim().split(/\s+/);
+                        return [parseFloat(c[1]), parseFloat(c[0])]; // [Lat, Lon]
+                    });
+                    geometries.push({ type: 'Polygon', coordinates: [ringPairs] });
+                }
+                break;
+            case 'MULTILINESTRING':
+            case 'MULTIPOLYGON':
+                // MULTILINESTRING((lon1 lat1, lon2 lat2), (lon3 lat3, lon4 lat4))
+                // MULTIPOLYGON(((lon1 lat1, ...), (lon5 lat5, ...)))
+                // This is a bit complex for a simple regex without full parsing.
+                // We'll approximate by finding all inner (paren) groups and treating them as lines/rings.
+                // For a more robust solution, a proper WKT parser library is needed.
+                var outerParens = content.match(/\(([^()]+(?:\([^()]*\)[^()]*)*)\)/g); // Matches content within top-level parens
+
+                if (outerParens) {
+                    var multiGeomCoords = [];
+                    for (var i = 0; i < outerParens.length; i++) {
+                        var currentContent = outerParens[i];
+                        // Remove outer parens, if present
+                        currentContent = currentContent.replace(/^\(|\)$/g, ''); 
+
+                        // For MultiPolygon, need to handle [[[...]]] structure
+                        if (type === 'MULTIPOLYGON') {
+                            var innerRingsMatch = currentContent.match(/\(([^)]*)\)/g);
+                            if (innerRingsMatch) {
+                                var polygonRings = [];
+                                for (var k = 0; k < innerRingsMatch.length; k++) {
+                                    var ringData = innerRingsMatch[k].replace(/^\(|\)$/g, ''); // Remove parens
+                                    var ringCoords = ringData.split(',').map(function(pair) {
+                                        var c = pair.trim().split(/\s+/);
+                                        return [parseFloat(c[1]), parseFloat(c[0])]; // [Lat, Lon]
+                                    });
+                                    polygonRings.push(ringCoords);
+                                }
+                                if (polygonRings.length > 0) {
+                                     multiGeomCoords.push(polygonRings);
+                                }
+                            }
+                        } else { // MULTILINESTRING
+                            var lineCoords = [];
+                            var pairs = currentContent.split(',');
+                            for (var j = 0; j < pairs.length; j++) {
+                                var pair = pairs[j].trim().split(/\s+/);
+                                if (pair.length >= 2) {
+                                    lineCoords.push([parseFloat(pair[1]), parseFloat(pair[0])]); // [Lat, Lon]
+                                }
+                            }
+                            if (lineCoords.length > 0) {
+                                multiGeomCoords.push(lineCoords);
+                            }
+                        }
+                    }
+                    if (multiGeomCoords.length > 0) {
+                         geometries.push({ type: type, coordinates: multiGeomCoords });
+                    }
+                }
+                break;
+            case 'GEOMETRYCOLLECTION':
+                // This is extremely complex to parse with regex only for WKT.
+                // A full WKT parser is usually needed.
+                // For this 90s app, we'll give a warning and try to extract what we can.
+                updateStatus('Warning: GeometryCollection WKT parsing is limited and may not capture all sub-geometries correctly.', false);
+                // Attempt to find individual geometry strings and parse them recursively
+                var geomStrings = content.match(/(\w+\s*\(.*?\)(?=\s*,\s*\w+\s*\(.*?\))|.*)/g); // Basic attempt to split by geometry
+                if (geomStrings) {
+                    for (var i = 0; i < geomStrings.length; i++) {
+                        geometries = geometries.concat(parseWKT(geomStrings[i].trim()));
+                    }
+                }
+                break;
+            default:
+                updateStatus('Unsupported WKT geometry type: ' + type, true);
+        }
+    } catch (e) {
+        updateStatus('Error parsing WKT: ' + e.message, true);
+        return [];
+    }
+    return geometries;
+}
+
+
+// Recursively extracts coordinates from GeoJSON structure
+// Converts [lon, lat] to internal [lat, lon]
+function extractGeometriesFromGeoJSON(geojsonObj) {
+    var geometries = [];
+
+    if (!geojsonObj || typeof geojsonObj !== 'object') {
+        return geometries;
+    }
+
+    switch (geojsonObj.type) {
+        case 'FeatureCollection':
+            if (geojsonObj.features && Array.isArray(geojsonObj.features)) {
+                for (var i = 0; i < geojsonObj.features.length; i++) {
+                    geometries = geometries.concat(extractGeometriesFromGeoJSON(geojsonObj.features[i]));
+                }
+            }
+            break;
+        case 'Feature':
+            if (geojsonObj.geometry) {
+                geometries = geometries.concat(extractGeometriesFromGeoJSON(geojsonObj.geometry));
+            }
+            break;
+        case 'GeometryCollection':
+            if (geojsonObj.geometries && Array.isArray(geojsonObj.geometries)) {
+                for (var i = 0; i < geojsonObj.geometries.length; i++) {
+                    geometries = geometries.concat(extractGeometriesFromGeoJSON(geojsonObj.geometries[i]));
+                }
+            }
+            break;
+        case 'Point':
+            // GeoJSON is [lon, lat], convert to [lat, lon]
+            if (Array.isArray(geojsonObj.coordinates) && geojsonObj.coordinates.length >= 2) {
+                geometries.push({ type: 'Point', coordinates: [geojsonObj.coordinates[1], geojsonObj.coordinates[0]] });
+            }
+            break;
+        case 'MultiPoint':
+            // GeoJSON is [[lon, lat], ...], convert to [[lat, lon], ...]
+            if (Array.isArray(geojsonObj.coordinates)) {
+                var multiPointCoords = [];
+                for (var i = 0; i < geojsonObj.coordinates.length; i++) {
+                    if (Array.isArray(geojsonObj.coordinates[i]) && geojsonObj.coordinates[i].length >= 2) {
+                        multiPointCoords.push([geojsonObj.coordinates[i][1], geojsonObj.coordinates[i][0]]);
+                    }
+                }
+                geometries.push({ type: 'MultiPoint', coordinates: multiPointCoords });
+            }
+            break;
+        case 'LineString':
+            // GeoJSON is [[lon, lat], ...], convert to [[lat, lon], ...]
+            if (Array.isArray(geojsonObj.coordinates)) {
+                var lineCoords = [];
+                for (var i = 0; i < geojsonObj.coordinates.length; i++) {
+                    if (Array.isArray(geojsonObj.coordinates[i]) && geojsonObj.coordinates[i].length >= 2) {
+                        lineCoords.push([geojsonObj.coordinates[i][1], geojsonObj.coordinates[i][0]]);
+                    }
+                }
+                geometries.push({ type: 'LineString', coordinates: lineCoords });
+            }
+            break;
+        case 'MultiLineString':
+            // GeoJSON is [[[lon, lat], ...], [[lon, lat], ...]], convert to [[[lat, lon], ...], ...]
+            if (Array.isArray(geojsonObj.coordinates)) {
+                var multiLineCoords = [];
+                for (var i = 0; i < geojsonObj.coordinates.length; i++) {
+                    var currentLine = [];
+                    if (Array.isArray(geojsonObj.coordinates[i])) {
+                        for (var j = 0; j < geojsonObj.coordinates[i].length; j++) {
+                            if (Array.isArray(geojsonObj.coordinates[i][j]) && geojsonObj.coordinates[i][j].length >= 2) {
+                                currentLine.push([geojsonObj.coordinates[i][j][1], geojsonObj.coordinates[i][j][0]]);
+                            }
+                        }
+                    }
+                    if (currentLine.length > 0) {
+                         multiLineCoords.push(currentLine);
+                    }
+                }
+                geometries.push({ type: 'MultiLineString', coordinates: multiLineCoords });
+            }
+            break;
+        case 'Polygon':
+            // GeoJSON is [[[lon, lat], ...], [[lon, lat], ...]] (exterior, interior rings)
+            // Convert to [[[lat, lon], ...], [[lat, lon], ...]]
+            if (Array.isArray(geojsonObj.coordinates)) {
+                var polyRings = [];
+                for (var i = 0; i < geojsonObj.coordinates.length; i++) {
+                    var currentRing = [];
+                    if (Array.isArray(geojsonObj.coordinates[i])) {
+                        for (var j = 0; j < geojsonObj.coordinates[i].length; j++) {
+                            if (Array.isArray(geojsonObj.coordinates[i][j]) && geojsonObj.coordinates[i][j].length >= 2) {
+                                currentRing.push([geojsonObj.coordinates[i][j][1], geojsonObj.coordinates[i][j][0]]);
+                            }
+                        }
+                    }
+                    if (currentRing.length > 0) {
+                         polyRings.push(currentRing);
+                    }
+                }
+                geometries.push({ type: 'Polygon', coordinates: polyRings });
+            }
+            break;
+        case 'MultiPolygon':
+            // GeoJSON is [[[[lon, lat], ...]], [[[]]]]
+            // Convert to [[[[lat, lon], ...]], [[[]]]]
+            if (Array.isArray(geojsonObj.coordinates)) {
+                var multiPolyGeoms = [];
+                for (var i = 0; i < geojsonObj.coordinates.length; i++) { // Each polygon
+                    var currentPolygonRings = [];
+                    if (Array.isArray(geojsonObj.coordinates[i])) {
+                        for (var j = 0; j < geojsonObj.coordinates[i].length; j++) { // Each ring in polygon
+                            var currentRing = [];
+                            if (Array.isArray(geojsonObj.coordinates[i][j])) {
+                                for (var k = 0; k < geojsonObj.coordinates[i][j].length; k++) { // Each coordinate in ring
+                                    if (Array.isArray(geojsonObj.coordinates[i][j][k]) && geojsonObj.coordinates[i][j][k].length >= 2) {
+                                        currentRing.push([geojsonObj.coordinates[i][j][k][1], geojsonObj.coordinates[i][j][k][0]]);
+                                    }
+                                }
+                            }
+                            if (currentRing.length > 0) {
+                                currentPolygonRings.push(currentRing);
+                            }
+                        }
+                    }
+                    if (currentPolygonRings.length > 0) {
+                        multiPolyGeoms.push(currentPolygonRings);
+                    }
+                }
+                geometries.push({ type: 'MultiPolygon', coordinates: multiPolyGeoms });
+            }
+            break;
+        default:
+            // Unknown geometry type, or an empty feature/geometry collection
+            break;
+    }
+    return geometries;
+}
+
+function parseGeoJSON(geojsonString) {
+    try {
+        var geojson = JSON.parse(geojsonString);
+        return extractGeometriesFromGeoJSON(geojson);
+    } catch (e) {
+        updateStatus('Invalid GeoJSON format: ' + e.message, true);
+        return [];
+    }
+}
+
+// Parses Lat/Lon coordinates from text. Supports multiple lines.
+function parseLatLon(latlonString) {
+    var geometries = [];
+    var lines = latlonString.split('\n');
+
+    for (var i = 0; i < lines.length; i++) {
+        var line = lines[i].trim();
+        if (!line) continue;
+
+        var lat, lon;
+        // Try 'Lat, Lon' or 'Lat: X, Lon: Y'
+        var match = line.match(/^([+-]?\d+\.?\d*)\s*,\s*([+-]?\d+\.?\d*)$/); // Simple Lat,Lon
+        if (!match) {
+            match = line.match(/lat[itude]*:\s*([+-]?\d+\.?\d*)\s*,?\s*lon[gitude]*:\s*([+-]?\d+\.?\d*)/i); // Latitude: X, Longitude: Y
+        }
+        if (match) {
+            lat = parseFloat(match[1]);
+            lon = parseFloat(match[2]);
+            if (!isNaN(lat) && !isNaN(lon)) {
+                geometries.push({ type: 'Point', coordinates: [lat, lon] });
+            }
+        }
+    }
+    return geometries;
+}
+
+// --- CORE OUTPUT FUNCTIONS ---
+
+// Converts internal geometries to WKT string
+// Expects internal coords as [Lat, Lon]
+function coordsToWKT(geoms) {
+    if (geoms.length === 0) return '';
+    var wktParts = [];
+
+    for (var i = 0; i < geoms.length; i++) {
+        var geom = geoms[i];
+        if (!geom || !geom.type || !geom.coordinates) continue;
+
+        var type = geom.type.toUpperCase();
+        var coords = geom.coordinates; // Internal: [Lat, Lon]
+
+        switch (type) {
+            case 'POINT':
+                // POINT(LON LAT)
+                wktParts.push('POINT(' + coords[1] + ' ' + coords[0] + ')');
+                break;
+            case 'MULTIPOINT':
+                // MULTIPOINT(LON1 LAT1, LON2 LAT2, ...)
+                var pointStrings = [];
+                for (var j = 0; j < coords.length; j++) {
+                    pointStrings.push(coords[j][1] + ' ' + coords[j][0]);
+                }
+                wktParts.push('MULTIPOINT(' + pointStrings.join(', ') + ')');
+                break;
+            case 'LINESTRING':
+                // LINESTRING(LON1 LAT1, LON2 LAT2, ...)
+                var lineStrings = [];
+                for (var j = 0; j < coords.length; j++) {
+                    lineStrings.push(coords[j][1] + ' ' + coords[j][0]);
+                }
+                wktParts.push('LINESTRING(' + lineStrings.join(', ') + ')');
+                break;
+            case 'MULTILINESTRING':
+                // MULTILINESTRING((LON1 LAT1, ...), (LONX LATX, ...))
+                var multiLineStrings = [];
+                for (var j = 0; j < coords.length; j++) { // Each line
+                    var currentLine = [];
+                    for (var k = 0; k < coords[j].length; k++) { // Each point in line
+                        currentLine.push(coords[j][k][1] + ' ' + coords[j][k][0]);
+                    }
+                    multiLineStrings.push('(' + currentLine.join(', ') + ')');
+                }
+                wktParts.push('MULTILINESTRING(' + multiLineStrings.join(', ') + ')');
+                break;
+            case 'POLYGON':
+                // POLYGON((LON1 LAT1, ...), (LONX LATX, ...)) for rings
+                var polyRings = [];
+                for (var j = 0; j < coords.length; j++) { // Each ring
+                    var currentRing = [];
+                    for (var k = 0; k < coords[j].length; k++) { // Each point in ring
+                        currentRing.push(coords[j][k][1] + ' ' + coords[j][k][0]);
+                    }
+                    polyRings.push('(' + currentRing.join(', ') + ')');
+                }
+                wktParts.push('POLYGON(' + polyRings.join(', ') + ')');
+                break;
+            case 'MULTIPOLYGON':
+                // MULTIPOLYGON(( (LON1 LAT1, ...), (LONX LATX, ...) ), ...)
+                var multiPolyGeoms = [];
+                for (var j = 0; j < coords.length; j++) { // Each polygon
+                    var currentPolyRings = [];
+                    for (var k = 0; k < coords[j].length; k++) { // Each ring in polygon
+                        var currentRing = [];
+                        for (var l = 0; l < coords[j][k].length; l++) { // Each point in ring
+                            currentRing.push(coords[j][k][l][1] + ' ' + coords[j][k][l][0]);
+                        }
+                        currentPolyRings.push('(' + currentRing.join(', ') + ')');
+                    }
+                    multiPolyGeoms.push('(' + currentPolyRings.join(', ') + ')');
+                }
+                wktParts.push('MULTIPOLYGON(' + multiPolyGeoms.join(', ') + ')');
+                break;
+            default:
+                // Fallback for unrecognized types (shouldn't happen with proper parsing)
+                wktParts.push('UNKNOWN_GEOMETRY()');
+                break;
+        }
+    }
+    // If only one geometry, return it directly. Otherwise, could wrap in GEOMETRYCOLLECTION
+    // For simplicity, just join if multiple, or return single.
+    if (wktParts.length === 1) {
+        return wktParts[0];
+    } else if (wktParts.length > 1) {
+        return 'GEOMETRYCOLLECTION(' + wktParts.join(', ') + ')';
+    }
+    return '';
+}
+
+// Converts internal geometries to GeoJSON string
+// Expects internal coords as [Lat, Lon]
+function coordsToGeoJSON(geoms) {
+    if (geoms.length === 0) return '';
+    
+    var geojsonGeometries = [];
+
+    for (var i = 0; i < geoms.length; i++) {
+        var geom = geoms[i];
+        if (!geom || !geom.type || !geom.coordinates) continue;
+
+        var type = geom.type;
+        var coords = geom.coordinates; // Internal: [Lat, Lon]
+
+        var geoJsonCoords;
+
+        switch (type) {
+            case 'Point':
+                // GeoJSON: [Lon, Lat]
+                geoJsonCoords = [coords[1], coords[0]];
+                geojsonGeometries.push({ type: type, coordinates: geoJsonCoords });
+                break;
+            case 'MultiPoint':
+                // GeoJSON: [[Lon1, Lat1], [Lon2, Lat2], ...]
+                geoJsonCoords = [];
+                for (var j = 0; j < coords.length; j++) {
+                    geoJsonCoords.push([coords[j][1], coords[j][0]]);
+                }
+                geojsonGeometries.push({ type: type, coordinates: geoJsonCoords });
+                break;
+            case 'LineString':
+                // GeoJSON: [[Lon1, Lat1], [Lon2, Lat2], ...]
+                geoJsonCoords = [];
+                for (var j = 0; j < coords.length; j++) {
+                    geoJsonCoords.push([coords[j][1], coords[j][0]]);
+                }
+                geojsonGeometries.push({ type: type, coordinates: geoJsonCoords });
+                break;
+            case 'MultiLineString':
+                // GeoJSON: [[[Lon1, Lat1], ...], [[LonX, LatX], ...]]
+                geoJsonCoords = [];
+                for (var j = 0; j < coords.length; j++) { // Each line
+                    var currentLine = [];
+                    for (var k = 0; k < coords[j].length; k++) { // Each point in line
+                        currentLine.push([coords[j][k][1], coords[j][k][0]]);
+                    }
+                    geoJsonCoords.push(currentLine);
+                }
+                geojsonGeometries.push({ type: type, coordinates: geoJsonCoords });
+                break;
+            case 'Polygon':
+                // GeoJSON: [[[Lon1, Lat1], ...], [[LonX, LatX], ...]] for rings
+                geoJsonCoords = [];
+                for (var j = 0; j < coords.length; j++) { // Each ring
+                    var currentRing = [];
+                    for (var k = 0; k < coords[j].length; k++) { // Each point in ring
+                        currentRing.push([coords[j][k][1], coords[j][k][0]]);
+                    }
+                    geoJsonCoords.push(currentRing);
+                }
+                geojsonGeometries.push({ type: type, coordinates: geoJsonCoords });
+                break;
+            case 'MultiPolygon':
+                // GeoJSON: [[[[Lon1, Lat1], ...]], [[[]]]]
+                geoJsonCoords = [];
+                for (var j = 0; j < coords.length; j++) { // Each polygon
+                    var currentPolyRings = [];
+                    for (var k = 0; k < coords[j].length; k++) { // Each ring in polygon
+                        var currentRing = [];
+                        for (var l = 0; l < coords[j][k].length; l++) { // Each point in ring
+                            currentRing.push([coords[j][k][l][1], coords[j][k][l][0]]);
+                        }
+                        currentPolyRings.push(currentRing);
+                    }
+                    geoJsonCoords.push(currentPolyRings);
+                }
+                geojsonGeometries.push({ type: type, coordinates: geoJsonCoords });
+                break;
+            default:
+                // Unrecognized geometry type
+                break;
+        }
+    }
+
+    // Wrap single geometry in Feature, multiple in FeatureCollection or GeometryCollection
+    if (geojsonGeometries.length === 1) {
+        return JSON.stringify({
+            "type": "Feature",
+            "geometry": geojsonGeometries[0],
+            "properties": {} // Empty properties for simplicity
+        }, null, 2); // Pretty print for 90s readability!
+    } else if (geojsonGeometries.length > 1) {
+        // Can be FeatureCollection if each is a Feature, or GeometryCollection if just geometries
+        // Let's go with GeometryCollection for simplicity unless features explicitly passed
+        return JSON.stringify({
+            "type": "GeometryCollection",
+            "geometries": geojsonGeometries
+        }, null, 2);
+    }
+    return '';
+}
+
+// Converts internal geometries to a flat list of Lat/Lon coordinates
+// Extracts all [Lat, Lon] pairs regardless of geometry type
+function coordsToLatLon(geoms) {
+    if (geoms.length === 0) return '';
+    var flatCoords = [];
+
+    // Helper to recursively flatten coordinates
+    function flattenRecursive(coordsArray) {
+        if (!coordsArray) return;
+        if (typeof coordsArray[0] === 'number') { // [lat, lon]
+            flatCoords.push(coordsArray[0] + ', ' + coordsArray[1]);
+        } else if (Array.isArray(coordsArray[0])) { // [[lat, lon], ...] or [[[lat, lon], ...]] etc.
+            for (var i = 0; i < coordsArray.length; i++) {
+                flattenRecursive(coordsArray[i]);
+            }
+        }
+    }
+
+    for (var i = 0; i < geoms.length; i++) {
+        var geom = geoms[i];
+        if (geom && geom.coordinates) {
+            flattenRecursive(geom.coordinates);
+        }
+    }
+    
+    // Ensure unique coordinates, as multi-geometries or polygons might repeat start/end points
+    var uniqueCoords = [];
+    var seen = {};
+    for (var i = 0; i < flatCoords.length; i++) {
+        var coordStr = flatCoords[i];
+        if (!seen[coordStr]) {
+            uniqueCoords.push(coordStr);
+            seen[coordStr] = true;
+        }
+    }
+    
+    return uniqueCoords.join('\n');
+}
+
+// --- MAIN CONVERSION LOGIC ---
+
+function convertData() {
+    var inputFormat = document.getElementById('inputFormat').value;
+    var outputFormat = document.getElementById('outputFormat').value;
+    var inputData = document.getElementById('inputData').value.trim();
+    var outputEl = document.getElementById('outputData');
+    
+    outputEl.value = ''; // Clear previous output
+    parsedGeometries = []; // Clear previous parsed data
+
+    if (!inputData) {
+        updateStatus('Please enter some data to convert!', true);
+        return;
+    }
+    
+    // Parse input data based on selected format
+    switch(inputFormat) {
+        case 'wkt':
+            parsedGeometries = parseWKT(inputData);
+            break;
+        case 'geojson':
+            parsedGeometries = parseGeoJSON(inputData);
+            break;
+        case 'latlon':
+            parsedGeometries = parseLatLon(inputData);
+            break;
+        default:
+            updateStatus('Invalid input format selected.', true);
+            return;
+    }
+    
+    if (parsedGeometries.length === 0) {
+        updateStatus('Could not parse valid data from your input. Check the format!', true);
+        outputEl.value = '';
+        return;
+    }
+    
+    // Convert to output format
+    var output = '';
+    switch(outputFormat) {
+        case 'wkt':
+            output = coordsToWKT(parsedGeometries);
+            break;
+        case 'geojson':
+            output = coordsToGeoJSON(parsedGeometries);
+            break;
+        case 'latlon':
+            output = coordsToLatLon(parsedGeometries);
+            break;
+        default:
+            updateStatus('Invalid output format selected.', true);
+            return;
+    }
+    
+    outputEl.value = output;
+    updateStatus('Conversion successful! Processed ' + parsedGeometries.length + ' geometries.', false);
+}
+
+function copyResults() {
+    var outputEl = document.getElementById('outputData');
+    if (!outputEl.value) {
+        updateStatus('No results to copy! Convert some data first.', true);
+        return;
+    }
+    
+    outputEl.select();
+    try {
+        // execCommand is deprecated but perfect for our 90s theme!
+        document.execCommand('copy'); 
+        updateStatus('Results copied to clipboard! (If your browser supports it)', false);
+    } catch (e) {
+        updateStatus('Copy failed - please select and copy manually. Error: ' + e.message, true);
+    }
+}
+
+// Initialize placeholder text on page load
+updateInputPlaceholder();
+</script>
+
+</body>
+</html>
