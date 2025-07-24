@@ -5,157 +5,172 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f4f8;
-            color: #333;
+            font-family: "MS Sans Serif", sans-serif;
+            background: linear-gradient(45deg, #008080, #00CED1, #20B2AA);
+            background-attachment: fixed;
+            color: #000;
             margin: 0;
             padding: 0;
+            font-size: 12px;
         }
         .header {
-            background-color: #005a9c;
-            color: #ffffff;
-            padding: 20px;
+            background: linear-gradient(to bottom, #C0C0C0, #808080);
+            border: 2px outset #C0C0C0;
+            color: #000;
+            padding: 15px;
             text-align: center;
+            box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
         .header h1 {
             margin: 0;
-            font-size: 2em;
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 1px 1px 1px #FFF;
         }
         .header p {
             margin: 5px 0 0;
-            font-size: 1.1em;
+            font-size: 14px;
+            font-style: italic;
         }
         .container {
             width: 95%;
             max-width: 1200px;
             margin: 20px auto;
-            background-color: #ffffff;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            overflow: hidden;
+            background: #C0C0C0;
+            border: 2px outset #C0C0C0;
+            box-shadow: 4px 4px 8px rgba(0,0,0,0.5);
         }
         .converter-grid {
             display: flex;
-            border-top: 1px solid #d1d5db;
         }
         .converter-panel {
             width: 50%;
-            padding: 20px;
+            padding: 15px;
+            background: #C0C0C0;
         }
         .converter-panel:first-child {
-            border-right: 1px solid #d1d5db;
-            background-color: #f9fafb;
+            border-right: 2px inset #C0C0C0;
         }
         .panel-title {
-            font-size: 1.2em;
+            font-size: 14px;
             font-weight: bold;
-            color: #005a9c;
-            margin-bottom: 15px;
+            color: #000080;
+            margin-bottom: 10px;
+            text-decoration: underline;
+        }
+        .title-bar {
+            background: linear-gradient(to right, #000080, #0000FF);
+            color: #FFF;
+            padding: 8px 15px;
+            font-weight: bold;
+            font-size: 16px;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
         }
         label {
             display: block;
             font-weight: bold;
-            margin-bottom: 5px;
-            color: #374151;
+            margin-bottom: 3px;
+            color: #000;
+            font-size: 11px;
         }
         select, textarea {
             width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 14px;
-            box-sizing: border-box; /* Important for consistent sizing */
+            padding: 2px;
+            border: 2px inset #C0C0C0;
+            font-size: 11px;
+            font-family: "MS Sans Serif", sans-serif;
+            box-sizing: border-box;
+            background: #FFF;
         }
         textarea {
-            font-family: 'Courier New', Courier, monospace;
+            font-family: "Courier New", monospace;
             resize: vertical;
-            min-height: 150px;
+            min-height: 120px;
+            background: #FFF;
         }
         .action-button {
-            background-color: #007bff;
-            color: #ffffff;
+            background: linear-gradient(to bottom, #C0C0C0, #808080);
+            color: #000;
             font-weight: bold;
-            font-size: 14px;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 15px;
+            font-size: 11px;
+            border: 2px outset #C0C0C0;
+            padding: 4px 12px;
             cursor: pointer;
-            margin-top: 10px;
-            transition: background-color 0.2s;
+            margin-top: 8px;
+            margin-right: 5px;
+            font-family: "MS Sans Serif", sans-serif;
         }
         .action-button:hover {
-            background-color: #0056b3;
+            background: linear-gradient(to bottom, #E0E0E0, #A0A0A0);
+        }
+        .action-button:active {
+            border: 2px inset #C0C0C0;
+        }
+        .action-button:disabled {
+            color: #808080;
+            cursor: default;
+            background: #C0C0C0;
         }
         .output-actions .action-button {
-            background-color: #28a745;
+            background: linear-gradient(to bottom, #90EE90, #32CD32);
+            color: #000;
         }
         .output-actions .action-button:hover {
-            background-color: #218838;
+            background: linear-gradient(to bottom, #98FB98, #228B22);
         }
         .status-bar {
             text-align: center;
-            padding: 15px;
-            margin: 20px auto;
+            padding: 8px;
+            margin: 15px auto;
             width: 90%;
             max-width: 1150px;
-            border-radius: 5px;
+            border: 2px inset #C0C0C0;
             font-weight: bold;
+            font-size: 11px;
+            background: #C0C0C0;
         }
         .status-success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
+            background: #90EE90;
+            color: #006400;
         }
         .status-error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        .examples {
-            background-color: #f9fafb;
-            padding: 20px;
-            margin: 20px auto;
-            width: 90%;
-            max-width: 1150px;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-        }
-        .examples h3 {
-            margin-top: 0;
-            color: #005a9c;
-        }
-        .examples code {
-            display: block;
-            background-color: #e5e7eb;
-            padding: 10px;
-            border-radius: 4px;
-            margin-bottom: 10px;
-            white-space: pre-wrap;
-            word-break: break-all;
+            background: #FFB6C1;
+            color: #8B0000;
         }
         .footer {
             text-align: center;
-            padding: 20px;
-            color: #6b7280;
-            font-size: 0.9em;
+            padding: 15px;
+            color: #000;
+            font-size: 10px;
+            background: rgba(192, 192, 192, 0.8);
+            border: 1px solid #808080;
+            margin: 20px auto;
+            width: 90%;
+            max-width: 1150px;
+        }
+        .blink {
+            animation: blink 1s linear infinite;
+        }
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
         }
     </style>
 </head>
 <body>
     
     <div class="header">
-        <h1>Geospatial Data Converter</h1>
+        <h1>🌍 Geospatial Data Converter 🌍</h1>
         <p>A fast and simple tool for converting between common coordinate formats.</p>
     </div>
 
     <div class="container">
-        <div style="padding: 15px 20px; background-color: #007bff; color: white; font-size: 1.3em; text-align: center;">
-            <b>Conversion Tool</b>
+        <div class="title-bar">
+            ⚡ Conversion Tool ⚡
         </div>
         <div class="converter-grid">
             <div class="converter-panel">
-                <div class="panel-title">Input Data</div>
+                <div class="panel-title">📥 Input Data</div>
                 
                 <label for="inputFormat">Input Format:</label>
                 <select id="inputFormat" onchange="updateInputPlaceholder()">
@@ -166,14 +181,14 @@
                 <br><br>
                 
                 <label for="inputData">Paste Your Data Here:</label>
-                <textarea id="inputData" rows="10" placeholder="Enter your WKT data here..."></textarea>
+                <textarea id="inputData" rows="8" placeholder="Enter your WKT data here..."></textarea>
                 <br><br>
                 
-                <button class="action-button" onclick="convertData()">Convert →</button>
+                <button class="action-button" onclick="convertData()">🔄 Convert →</button>
             </div>
             
             <div class="converter-panel">
-                <div class="panel-title">Output Results</div>
+                <div class="panel-title">📤 Output Results</div>
                 
                 <label for="outputFormat">Output Format:</label>
                 <select id="outputFormat">
@@ -184,12 +199,12 @@
                 <br><br>
                 
                 <label for="outputData">Converted Data:</label>
-                <textarea id="outputData" rows="10" readonly placeholder="Converted data will appear here..."></textarea>
+                <textarea id="outputData" rows="8" readonly placeholder="Converted data will appear here..."></textarea>
                 <br><br>
                 
                 <div class="output-actions">
-                    <button class="action-button" onclick="copyResults()">Copy to Clipboard</button>
-                    <button class="action-button" id="downloadButton" onclick="downloadFile()" disabled>Download File</button>
+                    <button class="action-button" onclick="copyResults()">📋 Copy to Clipboard</button>
+                    <button class="action-button" id="downloadButton" onclick="downloadFile()" disabled>💾 Download File</button>
                 </div>
             </div>
         </div>
@@ -199,27 +214,9 @@
         <div id="statusMessage" class="status-bar"></div>
     </div>
 
-    <div class="examples">
-        <h3>Usage & Examples</h3>
-        <p>Provide your data in one of the supported formats below.</p>
-        
-        <b>WKT Examples:</b>
-        <code>POINT(-122.4194 37.7749)
-LINESTRING(-122.48369 37.8331, -122.48348 37.8338)
-POLYGON((-122.4 37.8, -122.4 37.7, -122.3 37.7, -122.3 37.8, -122.4 37.8))</code>
-        
-        <b>GeoJSON Examples:</b>
-        <code>{ "type": "Point", "coordinates": [-122.4194, 37.7749] }
-{ "type": "Feature", "properties": { "name": "tan_uyen" }, "geometry": { ... } }</code>
-        
-        <b>Lat/Lon Example:</b> (One coordinate pair per line)
-        <code>37.7749, -122.4194
-37.8331, -122.48369</code>
-    </div>
-
     <div class="footer">
         <p>A lightweight, in-browser conversion tool. No data is sent to a server.</p>
-        <p>Copyright © 2024 - All Rights Reserved</p>
+        <p><span class="blink">★</span> Copyright © 2024 - All Rights Reserved <span class="blink">★</span></p>
     </div>
 
 <script>
@@ -253,7 +250,7 @@ function updateStatus(message, isError) {
     statusContainer.style.display = 'block';
 }
 
-// --- CORE PARSING FUNCTIONS (Unchanged from original logic, just for completeness) ---
+// --- CORE PARSING FUNCTIONS ---
 
 function parseWKT(wktString) {
     var geometries = [];
@@ -429,7 +426,7 @@ function parseLatLon(latlonString) {
     return geometries;
 }
 
-// --- CORE OUTPUT FUNCTIONS (Unchanged from original logic) ---
+// --- CORE OUTPUT FUNCTIONS ---
 
 function coordsToWKT(geoms) {
     if (geoms.length === 0) return '';
@@ -538,19 +535,42 @@ function convertData() {
     outputEl.value = '';
     downloadBtn.disabled = true;
     parsedGeometries = [];
-    suggestedFilename = 'converted_data'; // Reset filename
+    suggestedFilename = 'converted_data';
 
     if (!inputData) {
         updateStatus('Please enter data to convert.', true);
         return;
     }
     
-    // --- New: Try to extract filename from GeoJSON ---
+    // Extract filename from GeoJSON with better UTF-8 handling
     if (inputFormat === 'geojson') {
-        // Use a simple regex to find the name without a full parse, for performance
-        var nameMatch = inputData.match(/"name"\s*:\s*"([^"]+)"/i);
-        if (nameMatch && nameMatch[1]) {
-            suggestedFilename = nameMatch[1].replace(/[^a-z0-9_.-]/gi, '_'); // Sanitize filename
+        try {
+            var geojson = JSON.parse(inputData);
+            var extractName = function(obj) {
+                if (obj && typeof obj === 'object') {
+                    if (obj.properties && obj.properties.name) {
+                        return obj.properties.name;
+                    }
+                    if (obj.name) {
+                        return obj.name;
+                    }
+                    if (obj.features && Array.isArray(obj.features) && obj.features.length > 0) {
+                        return extractName(obj.features[0]);
+                    }
+                }
+                return null;
+            };
+            
+            var extractedName = extractName(geojson);
+            if (extractedName) {
+                // Properly handle UTF-8 characters and sanitize filename
+                suggestedFilename = extractedName
+                    .replace(/[<>:"/\\|?*]/g, '_')  // Replace invalid filename characters
+                    .replace(/\s+/g, '_')           // Replace spaces with underscores
+                    .substring(0, 100);             // Limit length
+            }
+        } catch (e) {
+            // If parsing fails for name extraction, continue with default
         }
     }
     
@@ -602,7 +622,7 @@ function downloadFile() {
     var filename = prompt("Enter a filename (without extension):", suggestedFilename);
     if (!filename) {
         updateStatus("Download cancelled.", false);
-        return; // User cancelled the prompt
+        return;
     }
 
     var outputFormat = document.getElementById('outputFormat').value;
@@ -619,9 +639,12 @@ function downloadFile() {
     
     var finalFilename = filename + '.' + extension;
 
-    var blob = new Blob([outputText], { type: mimeType + ';charset=utf-8;' });
+    // Create blob with explicit UTF-8 encoding
+    var blob = new Blob(['\ufeff' + outputText], { 
+        type: mimeType + ';charset=utf-8;' 
+    });
     
-    // Create a temporary link to trigger the download
+    // Create download link
     var link = document.createElement("a");
     var url = URL.createObjectURL(blob);
     link.setAttribute("href", url);
@@ -630,10 +653,14 @@ function downloadFile() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    
+    // Clean up the URL object
+    setTimeout(function() {
+        URL.revokeObjectURL(url);
+    }, 100);
 
-    updateStatus("File '" + finalFilename + "' download initiated.", false);
+    updateStatus("File '" + finalFilename + "' download initiated with UTF-8 encoding.", false);
 }
-
 
 // Initialize placeholder text on page load
 updateInputPlaceholder();
